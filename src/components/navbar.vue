@@ -43,6 +43,8 @@ export default {
       const auth = getAuth()
       signOut(auth)
         .then(() => {
+          this.isLoggedIn = false;
+          this.currentUser = auth.currentUser
           this.$router.push('/login')
         })
         .catch((error) => {
@@ -50,11 +52,13 @@ export default {
         })
     }
   }, 
-  created(){
-    if(auth.currentUser){
+  watch:{
+    $route (to, from){
+      if(auth.currentUser){
       this.isLoggedIn = true;
       this.currentUser = auth.currentUser
     }
-  },
+    }
+} 
 }
 </script>
